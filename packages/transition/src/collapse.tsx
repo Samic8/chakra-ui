@@ -15,16 +15,18 @@ const variants: CollapseVariants = {
       opacity: hasHeightValue(props.startingHeight) ? 1 : 0,
     }),
     height: props.startingHeight,
+    display: "none",
     transition: {
       height: { duration: 0.2, ease: EASINGS.ease },
       opacity: { duration: 0.3, ease: EASINGS.ease },
     },
   }),
-  enter: (props: CollapseOptions) => ({
+  enter: (props: CollapseOptions & { display: string }) => ({
     ...(props.animateOpacity && {
       opacity: 1,
     }),
     height: props.endingHeight,
+    display: props.display,
     transition: {
       height: {
         duration: 0.3,
@@ -122,7 +124,7 @@ export const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>(
       )
     }
 
-    const custom = { startingHeight, endingHeight, animateOpacity }
+    const custom = { startingHeight, endingHeight, animateOpacity, display }
 
     const ownProps: HTMLMotionProps<"div"> & React.RefAttributes<any> = {
       ref,
